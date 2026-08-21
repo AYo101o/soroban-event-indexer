@@ -13,4 +13,4 @@ hand-rolling ledger parsing yourself.
 - `dashboard/` — web UI for browsing events and analytics
 
 ## Live demo
-_(coming soon)_
+https://dashboard-blush-tau-42.vercel.app
