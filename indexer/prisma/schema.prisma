@@ -22,6 +22,7 @@ model Event {
   txHash       String
   createdAt    DateTime @default(now())
 
+  @@unique([txHash, eventType, contractId])
   @@index([contractId])
   @@index([ledgerSeq])
 }
