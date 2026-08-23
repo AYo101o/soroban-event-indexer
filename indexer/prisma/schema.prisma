@@ -33,3 +33,9 @@ model Contract {
   label       String?
   addedAt     DateTime @default(now())
 }
+
+model IndexerState {
+  id              String @id @default("singleton")
+  lastLedgerSeq   BigInt
+  updatedAt       DateTime @updatedAt
+}
