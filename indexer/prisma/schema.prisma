@@ -26,3 +26,10 @@ model Event {
   @@index([contractId])
   @@index([ledgerSeq])
 }
+
+model Contract {
+  id          String   @id @default(uuid())
+  contractId  String   @unique
+  label       String?
+  addedAt     DateTime @default(now())
+}
