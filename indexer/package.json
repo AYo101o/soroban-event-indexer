@@ -18,6 +18,7 @@
     "typescript": "^7.0.2"
   },
   "dependencies": {
-    "@prisma/client": "^7.9.1"
+    "@prisma/client": "^7.9.1",
+    "@stellar/stellar-sdk": "^17.0.0"
   }
 }
