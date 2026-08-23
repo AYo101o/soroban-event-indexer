@@ -10,4 +10,19 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+
+model Event {
+  id           String   @id @default(uuid())
+  contractId   String
+  ledgerSeq    BigInt
+  eventType    String
+  topics       Json
+  data         Json
+  txHash       String
+  createdAt    DateTime @default(now())
+
+  @@index([contractId])
+  @@index([ledgerSeq])
 }
