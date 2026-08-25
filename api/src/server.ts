@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import * as dotenv from "dotenv";
 import { errorHandler } from "./middleware/errorHandler";
+import { eventsRouter } from "./routes/events";
 
 dotenv.config();
 
@@ -14,6 +15,8 @@ app.get("/health", (_req, res) => {
 });
 
 app.use(errorHandler);
+
+app.use("/events", eventsRouter);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
