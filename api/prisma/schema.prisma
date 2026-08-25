@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Event {
+  id           String   @id @default(uuid())
+  contractId   String
+  ledgerSeq    BigInt
+  eventType    String
+  topics       Json
+  data         Json
+  txHash       String
+  createdAt    DateTime @default(now())
+
+  @@unique([txHash, eventType, contractId])
+  @@index([contractId])
+  @@index([ledgerSeq])
+}
+
+model Contract {
+  id          String   @id @default(uuid())
+  contractId  String   @unique
+  label       String?
+  addedAt     DateTime @default(now())
+}
+
+model IndexerState {
+  id              String @id @default("singleton")
+  lastLedgerSeq   BigInt
+  updatedAt       DateTime @updatedAt
+}
