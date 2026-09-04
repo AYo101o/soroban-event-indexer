@@ -1,0 +1,4 @@
+Sample Contract (testnet)
+Contract ID: CDCZSGV2K5MHVF5N4SN7AA36IUB6WZJCNIZFVB5PCFVSTF7WHNKGLW42
+Deployed: 2026-09-04
+Network: testnet
