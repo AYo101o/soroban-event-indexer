@@ -4,11 +4,12 @@ import { fetchEventsForRange, mapRawEvent } from "./events";
 import { writeEvent } from "./writer";
 import { getLastProcessedLedger, setLastProcessedLedger } from "./checkpoint";
 import { log, logError } from "./logger";
-import { getTrackedContractIds } from "./config";
+import { getTrackedContractIds, validateConfig } from "./config";
 
 const CONTRACT_IDS = getTrackedContractIds();
 
 async function main() {
+  validateConfig();
   log("Starting indexer...");
 
   const connected = await checkConnection();
