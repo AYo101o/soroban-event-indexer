@@ -4,8 +4,9 @@ import { fetchEventsForRange, mapRawEvent } from "./events";
 import { writeEvent } from "./writer";
 import { getLastProcessedLedger, setLastProcessedLedger } from "./checkpoint";
 import { log, logError } from "./logger";
+import { getTrackedContractIds } from "./config";
 
-const CONTRACT_IDS = (process.env.TRACKED_CONTRACT_IDS || "").split(",").filter(Boolean);
+const CONTRACT_IDS = getTrackedContractIds();
 
 async function main() {
   log("Starting indexer...");
