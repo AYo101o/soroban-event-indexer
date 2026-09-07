@@ -1,6 +1,6 @@
 import { server } from "./rpc";
 import { withRetry } from "./retry";
-import { scValToNative } from "@stellar/stellar-sdk";
+import { Contract, scValToNative } from "@stellar/stellar-sdk";
 
 export interface DecodedEvent {
   contractId: string;
@@ -11,9 +11,15 @@ export interface DecodedEvent {
   txHash: string;
 }
 
+function contractIdToString(contractId: unknown): string {
+  if (typeof contractId === "string") return contractId;
+  if (contractId instanceof Contract) return contractId.contractId();
+  throw new Error(`Unable to convert contractId to string: ${String(contractId)}`);
+}
+
 export function mapRawEvent(raw: any): DecodedEvent {
   return {
-    contractId: raw.contractId,
+    contractId: contractIdToString(raw.contractId),
     ledgerSeq: BigInt(raw.ledger),
     eventType: raw.topic?.[0] ? decodeEventValue(raw.topic[0]) : "unknown",
     topics: (raw.topic || []).map((t: unknown) => decodeEventValue(t)),

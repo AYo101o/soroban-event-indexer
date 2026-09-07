@@ -1,6 +1,11 @@
 import { checkConnection } from "./rpc";
-import { getLatestLedgerSeq } from "./ledger";
+import { startPolling } from "./poller";
+import { fetchEventsForRange, mapRawEvent } from "./events";
+import { writeEvent } from "./writer";
+import { getLastProcessedLedger, setLastProcessedLedger } from "./checkpoint";
 import { log, logError } from "./logger";
+
+const CONTRACT_IDS = (process.env.TRACKED_CONTRACT_IDS || "").split(",").filter(Boolean);
 
 async function main() {
   log("Starting indexer...");
@@ -11,8 +16,24 @@ async function main() {
     process.exit(1);
   }
 
-  const latestLedger = await getLatestLedgerSeq();
-  log(`Latest ledger sequence: ${latestLedger}`);
+  if (CONTRACT_IDS.length === 0) {
+    logError("No TRACKED_CONTRACT_IDS set in .env. Exiting.");
+    process.exit(1);
+  }
+
+  startPolling(async (latestLedger) => {
+    const lastProcessed = await getLastProcessedLedger();
+    const startLedger = lastProcessed ? Number(lastProcessed) + 1 : latestLedger - 10;
+
+    const result = await fetchEventsForRange(startLedger, CONTRACT_IDS);
+
+    for (const raw of result.events) {
+      const decoded = mapRawEvent(raw);
+      await writeEvent(decoded);
+    }
+
+    await setLastProcessedLedger(BigInt(latestLedger));
+  });
 }
 
 main().catch((err) => {
