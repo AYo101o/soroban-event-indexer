@@ -14,3 +14,8 @@ hand-rolling ledger parsing yourself.
 
 ## Live demo
 https://dashboard-blush-tau-42.vercel.app
+
+## Live services
+- Dashboard: https://soroban-event-indexer.vercel.app
+- API: https://soroban-api.onrender.com
+- Indexer: running continuously on Render (background service, no public URL)
