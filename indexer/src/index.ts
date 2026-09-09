@@ -5,10 +5,13 @@ import { writeEvent } from "./writer";
 import { getLastProcessedLedger, setLastProcessedLedger } from "./checkpoint";
 import { log, logError } from "./logger";
 import { getTrackedContractIds, validateConfig } from "./config";
+import { startHealthServer } from "./health";
 
 const CONTRACT_IDS = getTrackedContractIds();
 
 async function main() {
+  startHealthServer();
+
   validateConfig();
   log("Starting indexer...");
 
