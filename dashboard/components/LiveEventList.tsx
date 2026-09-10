@@ -35,7 +35,15 @@ export default function LiveEventList({ contractId }: { contractId: string }) {
     };
   }, [contractId]);
 
-  if (loading) return <p className="text-gray-500 text-sm">Loading events...</p>;
+  if (loading) {
+  return (
+    <div className="space-y-2">
+      {[1, 2, 3].map((i) => (
+        <div key={i} className="border border-gray-800 rounded p-4 h-16 animate-pulse bg-gray-900" />
+      ))}
+    </div>
+  );
+}
   if (error) return <p className="text-red-400 text-sm">{error}</p>;
 
   return <EventList events={events} />;
