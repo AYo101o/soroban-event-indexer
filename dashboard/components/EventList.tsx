@@ -2,12 +2,15 @@ import { StoredEvent } from "@/lib/api";
 
 export default function EventList({ events }: { events: StoredEvent[] }) {
   if (events.length === 0) {
-    return (
-      <p className="text-gray-500 text-sm">
-        No events captured yet for this contract.
-      </p>
-    );
-  }
+        return (
+            <div className="border border-dashed border-gray-800 rounded p-8 text-center">
+            <p className="text-gray-400 text-sm mb-1">No events captured yet</p>
+            <p className="text-gray-600 text-xs">
+                This will update automatically once the contract emits activity.
+            </p>
+            </div>
+        );
+    }
 
   return (
     <div className="space-y-2">
