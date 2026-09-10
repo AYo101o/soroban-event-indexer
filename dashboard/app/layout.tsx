@@ -14,7 +14,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-black text-white min-h-screen">
-        <header className="border-b border-gray-800 px-6 py-4">
+        <header className="border-b border-gray-800 px-4 sm:px-6 py-4">
           <h1 className="text-lg font-semibold">Soroban Event Indexer</h1>
         </header>
         <main className="p-6">{children}</main>
