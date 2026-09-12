@@ -8,7 +8,7 @@ import { eventsRouter } from "./routes/events";
 
 const app = express();
 app.use(helmet());
-app.use(cors({ origin: process.env.ALLOWED_ORIGIN || "*" }));
+app.use(cors());
 app.use(express.json());
 
 app.get("/health", (_req, res) => {
