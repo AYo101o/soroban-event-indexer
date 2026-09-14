@@ -39,3 +39,15 @@ export async function getTopAddresses(contractId: string, limit = 10) {
     .sort((a, b) => b.count - a.count)
     .slice(0, limit);
 }
+export async function getEventTypeCounts(contractId: string) {
+  const result = await prisma.event.groupBy({
+    by: ["eventType"],
+    where: { contractId },
+    _count: { eventType: true },
+  });
+
+  return result.map((r) => ({
+    eventType: r.eventType,
+    count: r._count.eventType,
+  }));
+}
