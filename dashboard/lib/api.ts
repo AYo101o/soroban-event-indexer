@@ -33,3 +33,11 @@ export async function fetchAnalytics(contractId: string): Promise<AnalyticsData>
   }
   return res.json();
 }
+export async function fetchEventsByAddress(address: string): Promise<StoredEvent[]> {
+  const res = await fetch(`${API_URL}/events/address/${encodeURIComponent(address)}`);
+  if (!res.ok) {
+    throw new Error(`API error: ${res.status}`);
+  }
+  const data = await res.json();
+  return data.events;
+}
