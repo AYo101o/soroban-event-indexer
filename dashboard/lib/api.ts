@@ -19,3 +19,17 @@ export async function fetchEvents(contractId: string): Promise<StoredEvent[]> {
   const data = await res.json();
   return data.events;
 }
+
+export interface AnalyticsData {
+  volumeOverTime: { date: string; count: number }[];
+  topAddresses: { address: string; count: number }[];
+  eventTypeCounts: { eventType: string; count: number }[];
+}
+
+export async function fetchAnalytics(contractId: string): Promise<AnalyticsData> {
+  const res = await fetch(`${API_URL}/analytics/${encodeURIComponent(contractId)}`);
+  if (!res.ok) {
+    throw new Error(`API error: ${res.status}`);
+  }
+  return res.json();
+}
