@@ -28,10 +28,15 @@ eventsRouter.get("/", validateQuery(eventsQuerySchema), async (req, res, next) =
         : {}),
     });
 
+    const serializedEvents = events.map((e) => ({
+      ...e,
+      ledgerSeq: e.ledgerSeq.toString(),
+    }));
+
     const lastEvent = events[events.length - 1];
     const nextCursor = events.length === Number(limit) && lastEvent ? lastEvent.id : null;
 
-    res.json({ events, nextCursor });
+    res.json({ events: serializedEvents, nextCursor });
   } catch (err) {
     next(err);
   }
@@ -53,7 +58,12 @@ eventsRouter.get("/address/:address", async (req, res, next) => {
       take: Number(limit),
     });
 
-    res.json({ events });
+    const serializedEvents = events.map((e) => ({
+      ...e,
+      ledgerSeq: e.ledgerSeq.toString(),
+    }));
+
+    res.json({ events: serializedEvents });
   } catch (err) {
     next(err);
   }
