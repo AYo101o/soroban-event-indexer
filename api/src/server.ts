@@ -5,6 +5,7 @@ import cors from "cors";
 import helmet from "helmet";
 import { errorHandler } from "./middleware/errorHandler";
 import { eventsRouter } from "./routes/events";
+import { analyticsRouter } from "./routes/analytics";
 
 const app = express();
 app.use(helmet());
@@ -16,6 +17,7 @@ app.get("/health", (_req, res) => {
 });
 
 app.use("/events", eventsRouter);
+app.use("/analytics", analyticsRouter);
 
 app.use(errorHandler);
 
